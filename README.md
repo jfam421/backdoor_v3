@@ -1,2 +1,2 @@
 # backdoor_v3
-backdoor_v3 by jfam421
+A backdoor that uses sockets to connect to another device. There are client and server side
